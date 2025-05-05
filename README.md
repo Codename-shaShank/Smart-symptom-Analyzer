@@ -1,125 +1,141 @@
-﻿# Smart-symptom-Analyzer
+# 🧠 Smart Symptom Analyzer
 
-## Description 
-This is a web app in which the user logs in and predicts their disease which are mentioned in it till now 
-they are Diabetes, Heart disease, Parkinson's disease, and Breast cancer. When the person gets detected with the disease, then it will be displayed in the map in which region it is detected 
+## 📝 Description
 
-## Steps to open 
-1. Run ml first
-     conmmands 
-      cd ml
-      pip install requirements.txt -r // make the setup to run fastapi
-      python -m uvicorn main:app --reload
-2. Run backend
-    open new terminal in that folder 
-    Commands
-      cd backend 
-        create an .env file in backend 
-        MONGODB_URI=
-        PORT=5000
-        GOOGLE_MAPS_API_KEY=
-      npm i 
-      npm start/ npm run dev
+**Smart Symptom Analyzer** is a full-stack web application that allows users to log in and predict the likelihood of four major diseases:
 
-3.  Run frontend
-      cd frontend 
-        creat an .env file in frontend
-        VITE_GOOGLE_MAPS_API_KEY=
-        VITE_GOOGLE_API_KEY=
-        VITE_BACKEND_URI="http://localhost:5000"
-      npm i 
-      npm run dev/npm start
+- **Diabetes**
+- **Heart Disease**
+- **Parkinson’s Disease**
+- **Breast Cancer**
 
-  
-## Tech stacks used
-React + vite, Tailwind css, Express js, Mongodb, nodejs, 
-ml
-Diabetes Prediction model
+Upon prediction, the location of the detected disease is marked on a map, visualizing regional health trends.
 
-Heart Disease Prediction model
+---
 
-Parkinson Disease Prediction model
+## 🚀 How to Run the Project
 
-Breast Cancer Prediction model
+### 1. Run the ML FastAPI Backend
 
-Dataset Description
-Diabetes Prediction Model
-Description: This dataset contains 768 instances of patient data, with 8 features including glucose levels, blood pressure, and insulin levels, used to predict diabetes.
+```bash
+cd ml
+pip install -r requirements.txt  # Install Python dependencies
+python -m uvicorn main:app --reload  # Start FastAPI server
+```
 
-Heart Disease Prediction Model
-Description: This dataset includes 1025 instances with 14 features such as age, sex, chest pain type, and resting blood pressure, used to predict the presence of heart disease.
+### 2. Run the Node.js Backend
 
-Parkinson Disease Prediction Model
-Description: This dataset has 195 instances with 22 features including average vocal fundamental frequency, measures of variation in fundamental frequency, and measures of variation in amplitude, used to predict Parkinson's disease.
+Open a new terminal:
 
-Breast Cancer Prediction Model
-Description: This dataset contains 569 instances with 30 features such as radius, texture, perimeter, and area, used to predict breast cancer.
+```bash
+cd backend
+```
 
-Technologies Used
-Programming Language: Python
+Create a `.env` file in the `backend/` directory with the following:
 
-Machine Learning Libraries: Scikit-learn, XGBoost
+```
+MONGODB_URI=<Your MongoDB URI>
+PORT=5000
+GOOGLE_MAPS_API_KEY=<Your Google Maps API Key>
+```
 
-Data Analysis and Visualization: Pandas, NumPy, Matplotlib, Seaborn
+Then run:
 
-Model Development Process
-Each disease prediction model was developed through the following steps:
+```bash
+npm install
+npm run dev  # Or: npm start
+```
 
-Importing the Dependencies
+### 3. Run the React Frontend
 
-Exploratory Data Analysis (EDA)
+```bash
+cd frontend
+```
 
-Data Preprocessing
+Create a `.env` file in the `frontend/` directory with the following:
 
-Handling missing values
-Handling outliers
-Label encoding/One-hot encoding
-Standardizing the data
-Model Selection
+```
+VITE_GOOGLE_MAPS_API_KEY=<Your Google Maps API Key>
+VITE_GOOGLE_API_KEY=<Your Google API Key>
+VITE_BACKEND_URI=http://localhost:5000
+```
 
-Selected the most common 5 classification models
-Trained each model and checked cross-validation scores
-Chose the top 3 models based on cross-validation scores
-Model Building and Evaluation
+Then run:
 
-Selected best features using Recursive Feature Elimination (RFE)
-Performed hyperparameter tuning using Grid Search CV
-Built the final model with the best hyperparameters and features
-Evaluated the model using classification reports
-Models Used
-The top 3 models for each disease prediction model are as follows:
+```bash
+npm install
+npm run dev  # Or: npm start
+```
 
-Diabetes Prediction Model
-Support Vector Classifier: Effective in high-dimensional spaces.
-Logistic Regression: Simple and effective binary classification model.
-Random Forest Classifier: Ensemble method that reduces overfitting.
-Heart Disease Prediction Model
-XGBoost: Boosting algorithm known for high performance.
-Random Forest Classifier: Robust and handles missing values well.
-Logistic Regression: Interpretable and performs well with binary classification.
-Parkinson Disease Prediction Model
-K-Nearest Neighbour: Simple algorithm that works well with small datasets.
-XGBoost: Powerful gradient boosting framework.
-Random Forest Classifier: Effective and reduces overfitting.
-Breast Cancer Prediction Model
-Logistic Regression: Highly interpretable and performs well with binary classification.
-XGBoost: Excellent performance with complex datasets.
-K-Nearest Neighbour: Effective with smaller datasets and straightforward implementation.
-Model Evaluation
-Diabetes Prediction Model Model Accuracy
-Support Vector Classifier 69.480%
-Logistic Regression 70.129%
-Random Forest Classifier 75.324%
-Heart Disease Prediction Model Model Accuracy
-XGBoost 100%
-Random Forest Classifier 100%
-Logistic Regression 88.311%
-Parkinson Disease Prediction Model Model Accuracy
-K-Nearest Neighbour 100%
-XGBoost 92.307%
-Random Forest Classifier 94.871%
-Breast Cancer Prediction Model Model Accuracy
-Logistic Regression 97.368%
-XGBoost 97.368%
-K-Nearest Neighbour 96.491%xboost
+---
 
+## 🧰 Tech Stack
+
+* **Frontend:** React + Vite, Tailwind CSS
+* **Backend:** Express.js, Node.js, MongoDB
+* **ML API:** FastAPI (Python)
+* **ML Libraries:** scikit-learn, XGBoost
+* **Visualization:** Google Maps API
+
+---
+
+## 🧪 ML Model Details
+
+### Datasets
+
+| Disease       | Instances | Features | Example Features           |
+| ------------- | --------- | -------- | -------------------------- |
+| Diabetes      | 768       | 8        | Glucose, BP, Insulin       |
+| Heart Disease | 1025      | 14       | Age, Sex, Chest Pain       |
+| Parkinson’s   | 195       | 22       | Frequency, Jitter, Shimmer |
+| Breast Cancer | 569       | 30       | Radius, Texture, Area      |
+
+### Model Development Pipeline
+
+1. **Exploratory Data Analysis (EDA)**
+2. **Data Preprocessing**
+
+   * Handling missing values & outliers
+   * Label/One-hot encoding
+   * Feature scaling
+3. **Model Selection**
+
+   * Evaluated 5 classifiers
+   * Selected top 3 via cross-validation
+4. **Final Model Building**
+
+   * Recursive Feature Elimination (RFE)
+   * Hyperparameter tuning (GridSearchCV)
+   * Classification Report Evaluation
+
+---
+
+## 📊 Model Performance
+
+| Disease           | Model               | Accuracy |
+| ----------------- | ------------------- | -------- |
+| **Diabetes**      | Random Forest       | 75.32%   |
+|                   | Logistic Regression | 70.13%   |
+|                   | SVC                 | 69.48%   |
+| **Heart**         | XGBoost             | 100%     |
+|                   | Random Forest       | 100%     |
+|                   | Logistic Regression | 88.31%   |
+| **Parkinson**     | KNN                 | 100%     |
+|                   | Random Forest       | 94.87%   |
+|                   | XGBoost             | 92.31%   |
+| **Breast Cancer** | Logistic Regression | 97.37%   |
+|                   | XGBoost             | 97.37%   |
+|                   | KNN                 | 96.49%   |
+
+---
+
+## 📍 Features
+
+* User authentication
+* Interactive UI with Vite + Tailwind CSS
+* Real-time disease predictions
+* Visualization of disease cases on Google Maps
+* RESTful architecture with ML integration
+---
+
+     
