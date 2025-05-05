@@ -13,6 +13,14 @@ Upon prediction, the location of the detected disease is marked on a map, visual
 
 ---
 
+## 🗺️ Disease Outbreak Map Feature
+
+Below is an example of how the app visualizes danger zones for diseases based on user predictions:
+
+![Disease Map Screenshot](./ml/disease-map.png)
+
+---
+
 ## 🚀 How to Run the Project
 
 ### 1. Run the ML FastAPI Backend
