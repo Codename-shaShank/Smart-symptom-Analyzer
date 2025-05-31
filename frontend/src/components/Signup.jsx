@@ -10,7 +10,11 @@ const Signup = ({ updateActive }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [city, setCity] = useState(null) // { name, latitude, longitude, fullAddress }
+  const [gender, setGender] = useState('')
+  const [dob, setDob] = useState('')
+  const [height, setHeight] = useState('')
+  const [weight, setWeight] = useState('')
+  const [city, setCity] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -19,31 +23,30 @@ const Signup = ({ updateActive }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError('') // Clear any previous errors
-    setLoading(true) // Set loading state to true when form is submitted
+    setError('')
+    setLoading(true)
 
     if (!city) {
       setError('Please select your city')
-      setLoading(false) // Reset loading state if validation fails
+      setLoading(false)
+      return
+    }
+
+    if (!gender) {
+      setError('Please select your gender')
+      setLoading(false)
       return
     }
 
     try {
-      // You will handle the signup logic here
-      console.log('Signup attempt with:', {
-        name,
-        email,
-        password,
-        location: {
-          latitude: city.latitude,
-          longitude: city.longitude,
-        },
-      })
-
       const res = await axios.post(`${Backend_URI}/api/profile`, {
         name,
         email,
         password,
+        gender,
+        dob,
+        height,
+        weight,
         location: {
           cityName: city.name,
           latitude: city.latitude,
@@ -51,30 +54,29 @@ const Signup = ({ updateActive }) => {
           state: city.state,
         },
       })
+
       setIsAuth(true)
       setProfile(res.data.user)
       navigate('/home')
     } catch (err) {
       setError(
         err.response?.data?.error ||
-          'An error occurred during signup. Please try again.'
+        'An error occurred during signup. Please try again.'
       )
       console.error('Signup error:', err)
     } finally {
-      setLoading(false) // Set loading state to false after request completes
+      setLoading(false)
     }
   }
 
   const handleCitySelect = (selectedCity) => {
     setCity(selectedCity)
-    console.log('Selected city:', selectedCity)
   }
 
   return (
     <SignupStyled>
       <div className='signup-content'>
         <h2 className='title'>Create an Account</h2>
-
         {error && <p className='error-message'>{error}</p>}
 
         <form onSubmit={handleSubmit}>
@@ -119,6 +121,58 @@ const Signup = ({ updateActive }) => {
             </div>
 
             <div className='input-control'>
+              <label>Gender</label>
+              <select
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                disabled={loading}
+                required
+              >
+                <option value='' disabled>Select your gender</option>
+                <option value='Male'>Male</option>
+                <option value='Female'>Female</option>
+                <option value='Other'>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div className='form-row'>
+            <div className='input-control'>
+              <label>Date of Birth</label>
+              <input
+                type='date'
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                disabled={loading}
+                required
+              />
+            </div>
+
+            <div className='input-control'>
+              <label>Height (cm)</label>
+              <input
+                type='number'
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+                disabled={loading}
+                required
+              />
+            </div>
+
+            <div className='input-control'>
+              <label>Weight (kg)</label>
+              <input
+                type='number'
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                disabled={loading}
+                required
+              />
+            </div>
+          </div>
+
+          <div className='form-row'>
+            <div className='input-control'>
               <label>Your City</label>
               <CitySearchInput
                 onCitySelect={handleCitySelect}
@@ -134,9 +188,7 @@ const Signup = ({ updateActive }) => {
 
           <div className='actions-row'>
             <div className='submit-btn'>
-              <button
-                type='submit'
-                disabled={loading}>
+              <button type='submit' disabled={loading}>
                 {loading ? (
                   <>
                     <LoadingSpinner /> Creating Account...
@@ -229,7 +281,8 @@ const SignupStyled = styled.div`
       font-weight: 500;
     }
 
-    input {
+    input,
+    select {
       width: 100%;
       padding: 0.8rem 1rem;
       border: 1px solid #ccc;
