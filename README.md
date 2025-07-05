@@ -51,7 +51,7 @@ Then run:
 
 ```bash
 npm install
-npm run dev  # Or: npm start
+npm start  # Or: npm start
 ```
 
 ### 3. Run the React Frontend
